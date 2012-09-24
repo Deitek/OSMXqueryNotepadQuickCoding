@@ -1,0 +1,288 @@
+{
+	"variables": {
+		"pes": "$",
+		"lang": "en",
+		"locale": "en-US",
+		"charset": "UTF-8",
+		"indentation": "\t",
+		"newline": "\n",
+		"declare-ns": "declare namespace",
+		"declare-var": "declare variable",
+		"declare-opt": "declare option",
+		"import-mod": "import module namespace",
+		"oms": "urn:com:metasolv:oms:xmlapi:1",
+		"automator": "java:oracle.communications.ordermanagement.automation.plugin.ScriptReceiverContextInvocation",
+		"context": "java:com.mslv.oms.automation.TaskContext",
+		"log": "java:org.apache.commons.logging.Log",
+		"outboundMessage": "java:javax.jms.TextMessage",
+		"xsl-ns": "http://www.w3.org/1999/XSL/Transform",
+		"une": "http://www.une.net.co/ncaOsmUne",
+
+		"ns-ord-update": "http://www.metasolv.com/OMS/OrderDataUpdate/2002/10/25",
+		"update-path": "/InformacionGestionOrden/InformacionGestionNodoActualizar[@index='{$indexActualizacion/attribute::index}']",
+		"lib-gen": "http://www.une.net.co/ncaOsmUne/RecursosFunciones/NcaOsmActivador/ActivadorFunctions.xqy"	,
+		"lib-comun": "http://www.une.net.co/ncaOsmUne/RecursosFunciones/GestionOrdenes/FuncionesComunes.xqy",
+		"lib-xml": "http://www.une.net.co/ncaOsmUne/RecursosFunciones/FuncionesComunes/FuncionesElementosAtributosXml.xqy",
+		"lib-ordenes": "http://www.une.net.co/ncaOsmUne/RecursosFunciones/GestionOrdenes/FuncionesGestionOrdenesAprovisionador.xqy",
+		"lib-crm": "http://www.une.net.co/ncaOsmUne/RecursosFunciones/NcaOsmCrm/NcaOsmCrmActualizarEstadosPnrrPnrcRfs.xqy",
+		"lib-indicadores": "http://www.une.net.co/ncaOsmUne/RecursosFunciones/NcaOsmCrm/NcaOsmCrmNotificarEstadosPnrrPnrcRfs.xqy",
+		"lib-gtc": "http://www.une.net.co/ncaOsmUne/RecursosFunciones/GestionOrdenes/FuncionesGestionOrdenesGtc.xqy",
+		"lib-ws": "http://www.une.net.co/ncaOsmUne/RecursosFunciones/FuncionesComunes/FuncionesOsmWebService.xqy",
+		"lib-ns": "http://www.une.net.co/ncaOsmUne/RecursosFunciones/FuncionesComunes/FuncionesNamespaces.xqy",
+
+		"prop-gen": "http://www.une.net.co/ncaOsmUne/PropiedadesRecursos/PropiedadesGenerales.xml",
+		"prop-inv": "http://www.une.net.co/ncaOsmUne/PropiedadesInventario/PropiedadesInventario.xml",
+		"prop-ba": "http://www.une.net.co/ncaOsmUne/PropiedadesBA_TOIP/PropiedadesBA_TOIP.xml",
+		"prop-tv": "http://www.une.net.co/ncaOsmUne/PropiedadesTV/PropiedadesTV.xml",
+		"prop-act": "http://ncaosmune/activador",
+		"prop-idc": "http://ncaosmune/idc",
+		"prop-eyt": "http://ncaosmune/eyt",
+		"prop-si": "http://ncaosmune/si",
+		"prop-spp": "http://ncaosmune/spp",
+		"prop-fact": "http://ncaosmune/fact",
+		"prop-dom": "http://ncaosmune/dom",
+		"prop-gtc": "http://www.une.net.co/ncaOsmUne/PropiedadesGTC/PropiedadesGTC.xml",
+		"prop-insta": "http://www.une.net.co/ncaOsmUne/PropiedadesInstalacionRecursos/PropiedadesInstalacion.xml",
+
+		"omsnew": "http://xmlns.oracle.com/communications/ordermanagement",
+		"automator-envia": "java:oracle.communications.ordermanagement.automation.plugin.ScriptSenderContextInvocation",
+		"env": "http://schemas.xmlsoap.org/soap/envelope/",
+		"saxon": "http://saxon.sf.net/",
+		"java": "http://xml.apache.org/xalan/java",
+		"sax-met-xml": "method=xml",
+		"sax-ind-spac": "saxon:indent-spaces=4",
+
+		"log4j": "java:com.mslv.oms.logging.Log4JLogger"
+
+
+
+	},
+	
+	"css": {
+		"filters": "html",
+		"snippets": {
+			"@i": "@import url(|);",
+			"orp": "orphans:|;",
+			"wid": "widows:|;"
+		}
+	},
+	
+	"html": {
+		"filters": "html",
+		"snippets": {
+			"cc:ie6": "<!--[if lte IE 6]>\n\t${child}|\n<![endif]-->",
+			"oms": "${declare-ns} oms =\"${oms}\";\n",
+			"log": "${declare-ns} log =\"${log}\";\n",
+			"automator": "${declare-ns} automator =\"${automator}\";\n",
+			"context": "${declare-ns} context =\"${context}\";\n",
+			"xsl:ns": "${declare-ns} xsl =\"${xsl}\";\n",
+			"outbound": "${declare-ns} outboundMessage =\"${outboundMessage}\";\n",
+
+			"function": "declare function local:nombreFuncion(${pes}varString as xs:string*, ${pes}varElement as element()) as node()*{\n\n\treturn\n\n};",
+			"if-else": "if(condicion) then(\n\t${pes}logica\n)\nelse()",
+
+			"usuario": "let ${pes}usuario := FuncionesElementosAtributosXml:getPropiedad(${pes}confXmlGenerales, \"nca.orquestacion.creacionorden.wsse_username\")",
+
+			"clave": "let ${pes}clave := FuncionesElementosAtributosXml:getPropiedad(${pes}confXmlGenerales, \"nca.orquestacion.creacionorden.wsse_password\")",
+
+			"create-order-request": "FuncionesOsmWebService:createOrderRequest(${pes}usuario,${pes}clave,${pes}soapMessageOutput)",
+
+			"create-order-request-specification": "FuncionesOsmWebService:createOrderBySpecificationRequest(${pes}usuario,${pes}clave,${pes}cartridgeName,${pes}cartridgeVersion,${pes}orderType,${pes}orderSource,${pes}orderReference,${pes}soapMessageOutput)",
+
+			"for": "for ${pes}item in ${pes}nodes/oms:subnodes\n\t\tlet ${pes}var := ${pes}item/oms:value/text()\nreturn ${pes}var\n",
+
+			"concat": "fn:concat(${pes}var1, ${pes}var2, ${pes}var3)",
+
+			"log:debug": "log:debug(${pes}log,fn:concat('Log ___________-: ',${pes}var)),",
+			"return": "return (\n\n\t\t)\n",
+			"exito": "${declare-var} ${pes}statusExito := funcionesElementosAtributosXml:getPropiedad(${pes}confXmlGenerales, \"nca.osm.status.exito\");",
+			"error": "${declare-var} ${pes}statusError := funcionesElementosAtributosXml:getPropiedad(${pes}confXmlGenerales, \"nca.osm.status.error\");",
+			"final": "${declare-var} ${pes}statusFinal := funcionesElementosAtributosXml:getPropiedad(${pes}confXmlGenerales, \"nca.osm.status.final\");",
+
+			"saxon-options": "${declare-opt} saxon:output \"${sax-met-xml}\";\n${declare-opt} saxon:output \"${sax-ind-spac}\";\n",
+			"log:info":	"log:info(${pes}log,fn:concat('Log ___________-: ',${pes}var)),",
+
+			"log4j": "${declare-ns} log =\"${log4j}\";\n",
+
+			"recibe:ns": "(: Declarar namespaces :)\n${declare-ns} oms =\"${oms}\";\n${declare-ns} automator =\"${automator}\";\n${declare-ns} context =\"${context}\";\n${declare-ns} log =\"${log}\";\n${declare-ns} xsl =\"${xsl-ns}\";\n${declare-ns} outboundMessage =\"${outboundMessage}\";",
+			"referencia": "let ${pes}referencia := ${pes}taskDataOrder/oms:Reference/text()",
+			"tipo-comunicacion": "let ${pes}tipoComunicacion := funcionesComunes:obtenerTipoComunicacion(${pes}taskDataOrder)",
+			"concat-updates": "library:concatUpdates(${pes}almacenarXml, ${pes}actualizar)",
+			"concat-elements": "library:concatElements( ${pes}element1, ${pes}element2)",
+
+
+
+			"taskexit": "context:completeTaskOnExit(${pes}context, ${pes}statusExito),",
+			"automator:update": "automator:setUpdateOrder(${pes}automator,\"false\"),",
+			"sax-serialize": "let ${pes}varSerialized := saxon:serialize(${pes}varSerializar, <xsl:output method='xml' omit-xml-declaration='yes' indent='yes' saxon:indent-spaces='4'/>)",
+
+			"module": "module namespace FuncionesGestionEspecifica = \"FuncionesGestionEspecifica\";",
+
+			"envia:ns": "(: Declarar namespaces :)\n${declare-ns} oms =\"${oms}\";\n${declare-ns} automator =\"${automator-envia}\";\n${declare-ns} context =\"${context}\";\n${declare-ns} log =\"${log}\";\n${declare-ns} xsl =\"${xsl-ns}\";\n${declare-ns} outboundMessage =\"${outboundMessage}\";",
+
+			"vars-ext": "(: Declarar variables Externas :)\n${declare-var} ${pes}automator external;\n${declare-var} ${pes}context external;\n${declare-var} ${pes}log external;\n${declare-var} ${pes}outboundMessage external;\n",
+
+			"comment": "(:~\n: Comentario Acerca de Funcionalidad del Xquery \n: @author Tecnocom\n: @version 1.0.0\n:)",
+			"comment-fn": "(:~\n: Comentario Acerca de Funcionalidad del Xquery \n: @param ${pes}var1\n: @param ${pes}var2\n: @return ${pes}varReturn\n:)",
+			"ord:update": " <OrderDataUpdate xmlns=\"${ns-ord-update}\"\n\t\t<Update path=\"${update-path}\">\n\t\t\t<NodoActualizar>{${pes}varActualiza}</NodoActualizar>\n\t\t\t<NodoActualizar2>{${pes}varActualiza2}</NodoActualizar2>\n\t\t</Update>\n</OrderDataUpdate>",
+
+
+			
+			"recibe:taskdata": "let ${pes}taskDataOrder := fn:root(automator:getOrderAsDOM(${pes}))/oms:GetOrder.Response", 
+			"envia:taskdata": "let ${pes}taskDataOrder := .//oms:GetOrder.Response",
+
+			"prop:gen": "(: Obtener Xml de Propiedades Generales :)\n${declare-var} ${pes}confXmlGenerales := doc(\"${prop-gen}\");",
+			"prop:dom": "(: Obtener Xml de Propiedades DOM :)\n${declare-var} ${pes}confXmlDOM := doc(\"${prop-dom}\");",
+			"prop:gtc": "(: Obtener Xml de Propiedades GTC :)\n${declare-var} ${pes}confXmlGTC := doc(\"${prop-gtc}\");",
+			"prop:insta": "(: Obtener Xml de Propiedades Instalacion :)\n${declare-var} ${pes}confXmlInstalacion := doc(\"${prop-insta}\");",
+			"prop:inv": "(: Obtener Xml de Propiedades Inventario :)\n${declare-var} ${pes}confXmlInventario := doc(\"${prop-inv}\");",
+			"prop:act": "(: Obtener Xml de Propiedades Activador :)\n${declare-var} ${pes}confXmlActivador := doc(\"${prop-act}\");",
+			"prop:ba": "(: Obtener Xml de Propiedades BA y TOIP :)\n${declare-var} ${pes}confXmlBandaAnchaTOIP := doc(\"${prop-ba}\");",
+			"prop:tv": "(: Obtener Xml de Propiedades TV :)\n${declare-var} ${pes}confXmlTV := doc(\"${prop-tv}\");",
+			"prop:eyt": "(: Obtener Xml de Propiedades EYT :)\n${declare-var} ${pes}confXmlEYT := doc(\"${prop-eyt}\");",
+			"prop:spp": "(: Obtener Xml de Propiedades SPP :)\n${declare-var} ${pes}confXmlSPP := doc(\"${prop-spp}\");",
+			"prop:si": "(: Obtener Xml de Propiedades SI :)\n${declare-var} ${pes}confXmlSPP := doc(\"${prop-si}\");",
+			"prop:idc": "(: Obtener Xml de Propiedades IDC :)\n${declare-var} ${pes}confXmlIDC := doc(\"${prop-idc}\");",
+			"prop:fact": "(: Obtener Xml de Propiedades Factibilidad :)\n${declare-var} ${pes}confXmlFactibilidad := doc(\"${prop-fact}\");",
+
+			"lib:general": "${import-mod} generalLib = \"ncaActivadorLib\" at \"${lib-gen}\";\n",
+			"lib:comunes": "${import-mod} funcionesComunes = \"FuncionesComunes\" at \"${lib-comun}\";\n",
+			"lib:xml": "${import-mod} funcionesElementosAtributosXml = \"FuncionesElementosAtributosXml\" at \"${lib-xml}\";\n",
+			"lib:ordenes": "${import-mod} funcionesGestionOrdenesAprovisionador = \"FuncionesGestionOrdenesAprovisionador\" at \"${lib-ordenes}\";\n",
+			"lib:crm": "${import-mod} ncaCrmLib = \"ncaCrmLib\" at \"${lib-crm}\";\n",
+			"lib:indicadores": "${import-mod} notificaIndicadoresLib = \"notificaIndicadoresLib\" at \"${lib-indicadores}\";\n",
+			"lib:gtc": "${import-mod} FuncionesGestionOrdenesGtc = \"FuncionesGestionOrdenesGtc\" at \"${lib-gtc}\";\n",
+			"lib:ws": "${import-mod} FuncionesOsmWebService = \"FuncionesOsmWebService\" at \"${lib-ws}\";\n",
+
+			"instanciada-fn": "let ${pes}functionInstanciada := ${pes}taskDataOrder/oms:_root/oms:ControlData/oms:Functions/*[@instanceLocked=\"true\"]",
+			"modoejecucion": "let ${pes}modoEjecucion := ${pes}taskDataOrder/oms:ExecutionMode/text()",
+
+			"component-key": "let ${pes}varComponentKey := ${pes}taskDataOrder/oms:_root/oms:ControlData/oms:Functions/*[@instanceLocked=\"true\"]/oms:componentKey/text()",
+
+			"order:response": "let ${pes}orderAsString := context:getOrder(${pes}context)\nlet ${pes}order := saxon:parse(${pes}orderAsString)\nlet ${pes}rootresponse := fn:root(.)\n",
+
+			"correlator": "correlator:add(automator:getCorrelator(${pes}automator,${pes}context),${pes}ReferenciaOrden),",
+
+			"correlator:add": "correlator:add(automator:getCorrelator(${pes}automator,${pes}context),${pes}ReferenciaOrden),",
+
+			"set-correlation-id": "outboundMessage:setJMSCorrelationID(${pes}outboundMessage, ${pes}IdCorrelacion),",
+
+			"nombre-funcion": "let ${pes}nombreFuncion := fn:local-name(${pes}functionInstanciada)",
+
+			"item-ref": "let ${pes}orderItemFunction := ${pes}taskDataOrder/oms:_root/oms:ControlData/oms:Functions/*[@instanceLocked=\"true\"]/oms:orderItem/oms:orderItemRef",
+
+			"items-ref": "let ${pes}orderItemFunction := ${pes}taskDataOrder/oms:_root/oms:ControlData/oms:Functions/*[@instanceLocked=\"true\"]/oms:orderItem/oms:orderItemRef",
+
+			"ws-out-properties": "(: Configurar propiedades JMS necesarias para la creacion de la orden via JMS :)\noutboundMessage:setStringProperty(${pes}outboundMessage, \"URI\", \"/osm/wsapi\"),\noutboundMessage:setStringProperty(${pes}outboundMessage, \"_wls_mimehdrContent_Type\", \"text/xml; charset=${charset\"),",
+
+			"ws-out": "(: Configurar propiedades JMS necesarias para la creacion de la orden via JMS :)\noutboundMessage:setStringProperty(${pes}outboundMessage, \"URI\", \"/osm/wsapi\"),\noutboundMessage:setStringProperty(${pes}outboundMessage, \"_wls_mimehdrContent_Type\", \"text/xml; charset=${charset\"),",
+
+			"exito-cancela": "${declare-var} ${pes}estadoCancelacionExitosa := funcionesElementosAtributosXml:getPropiedad(${pes}confXmlGenerales, \"nca.osm.status.cancelacion_exitosa\");",
+			"error-cancela": "${declare-var} ${pes}estadoErrorCancelando := funcionesElementosAtributosXml:getPropiedad(${pes}confXmlGenerales, \"nca.osm.status.cancelacion_fallida\");",
+
+			"let": "let ${pes}var := ",
+
+			"let-if": "let ${pes}var := if (Condicion) then ( Accion) else ()",
+
+			"let-doc": "let ${pes}var := doc(\"\")",
+
+			"let-for": "let ${pes}var := for item in collection",
+
+			"html:5": "<!doctype html>\n<html lang=\"${lang}\">\n<head>\n\t<meta charset=\"${charset}\">\n\t<title></title>\n</head>\n<body>\n\t${child}|\n</body>\n</html>"
+		},
+		
+		"abbreviations": {
+			"a": "<a href=\"\">",
+			"select+": "select>option",
+			"optg+": "optgroup>option"
+		}
+	},
+
+	"xqy": {
+		"extends": "html",
+		"snippets": {
+			"nsosm2": "declare namespace oms;"
+		},
+		"abbreviations": {
+			"nsosm": "declare namespace osm;"
+		}
+	},
+
+	"xml": {
+		"extends": "html",
+		"profile": "xml",
+		"filters": "html"
+	},
+	
+	"xsl": {
+		"extends": "html",
+		"filters": "html, xsl",
+		"abbreviations": {
+			"tm": "<xsl:template match=\"\" mode=\"\">",
+			"tmatch": "tm",
+			"tn": "<xsl:template name=\"\">",
+			"tname": "tn",
+			"call": "<xsl:call-template name=\"\"/>",
+			"ap": "<xsl:apply-templates select=\"\" mode=\"\"/>",
+			"api": "<xsl:apply-imports/>",
+			"imp": "<xsl:import href=\"\"/>",
+			"inc": "<xsl:include href=\"\"/>",
+
+			"ch": "<xsl:choose>",
+			"xsl:when": "<xsl:when test=\"\">",
+			"wh": "xsl:when",
+			"ot": "<xsl:otherwise>",
+			"if": "<xsl:if test=\"\">",
+
+			"par": "<xsl:param name=\"\">",
+			"pare": "<xsl:param name=\"\" select=\"\"/>",
+			"var": "<xsl:variable name=\"\">",
+			"vare": "<xsl:variable name=\"\" select=\"\"/>",
+			"wp": "<xsl:with-param name=\"\" select=\"\"/>",
+			"key": "<xsl:key name=\"\" match=\"\" use=\"\"/>",
+
+			"elem": "<xsl:element name=\"\">",
+			"attr": "<xsl:attribute name=\"\">",
+			"attrs": "<xsl:attribute-set name=\"\">",
+
+			"cp": "<xsl:copy select=\"\"/>",
+			"co": "<xsl:copy-of select=\"\"/>",
+			"val": "<xsl:value-of select=\"\"/>",
+			"each": "<xsl:for-each select=\"\">",
+			"for": "each",
+			"tex": "<xsl:text></xsl:text>",
+
+			"com": "<xsl:comment>",
+			"msg": "<xsl:message terminate=\"no\">",
+			"fall": "<xsl:fallback>",
+			"num": "<xsl:number value=\"\"/>",
+			"nam": "<namespace-alias stylesheet-prefix=\"\" result-prefix=\"\"/>",
+			"pres": "<xsl:preserve-space elements=\"\"/>",
+			"strip": "<xsl:strip-space elements=\"\"/>",
+			"proc": "<xsl:processing-instruction name=\"\">",
+			"sort": "<xsl:sort select=\"\" order=\"\"/>",
+
+			"choose+": "xsl:choose>xsl:when+xsl:otherwise"
+		}
+	},
+	
+	"haml": {
+		"filters": "haml",
+		"extends": "html"
+	},
+	
+	"scss": {
+		"filters": "haml",
+		"extends": "css"
+	},
+	
+	"sass": {
+		"filters": "haml",
+		"extends": "css"
+	},
+	
+	"less": {
+		"filters": "haml",
+		"extends": "css"
+	}
+}
